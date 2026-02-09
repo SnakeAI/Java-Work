@@ -31,7 +31,7 @@ src/main/java/com/yourteam/project/
 └─ validation/CarValidator.java
 ```
 ```
-## Роли и задачи (4 участника)
+## Роли и задачи
 
 ### Садыков Фарух
 - App.java (главное меню, цикл)
