@@ -1,5 +1,6 @@
 package com.yourteam.validation;
 
-public class CarValidator {
-    
+public class CarValidator extends Car {
+
+
 }
