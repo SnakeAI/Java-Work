@@ -1,5 +1,9 @@
 package com.yourteam.strategy;
 
-public class SortStrategy {
-    
+import com.yourteam.model.Car;
+
+import java.util.Comparator;
+
+public interface SortStrategy {
+    void sort(Car[] cars, Comparator<Car> comparator);
 }
