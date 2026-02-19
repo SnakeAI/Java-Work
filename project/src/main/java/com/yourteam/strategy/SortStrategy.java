@@ -1,5 +1,6 @@
 package com.yourteam.strategy;
 
-public class SortStrategy {
+
+public interface SortStrategy {
     
 }
