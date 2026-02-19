@@ -1,6 +1,10 @@
 package com.yourteam.validation;
 
-public class CarValidator extends Car {
+import com.yourteam.model.Car;
+
+public class CarValidator extends Car{
 
 
 }
+    
+
