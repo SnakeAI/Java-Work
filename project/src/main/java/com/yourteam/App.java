@@ -1,108 +1,80 @@
 package com.yourteam;
 
-import com.yourteam.io.CarFileReader;
-import com.yourteam.io.CarManualinput;
-import com.yourteam.io.CarRandomGenerator;
-import com.yourteam.model.Car;
-import com.yourteam.strategy.QuickSort;
-
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
+import com.yourteam.io.CarFileReader;
+import com.yourteam.io.CarInput;
+import com.yourteam.io.CarProvider;
+import com.yourteam.io.CarRandomGenerator;
+import com.yourteam.model.Car;
 
 public class App {
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
+        System.out.println("=== Программа для работы с данными автомобилей ===");
 
+        while (true) {
+            printMenu();
+            int choice = getMenuChoice();
+            if (choice == 4) break;
 
-        while (running) {
-           System.out.println("Меню");
-            System.out.println("1. Ввести массив вручную");
-            System.out.println("2. Считать массив из файла");
-            System.out.println("3. Сгенерировать случайный массив");
-            System.out.println("0. Выход");
-            System.out.print("Выберите пункт: ");
+            // Полиморфизм в действии: работаем с интерфейсом, а не реализацией
+            CarProvider provider = null;
 
-            String choice = scanner.nextLine().trim();
-            switch (choice)   {
-                case "1" -> handleManualinput(scanner);
-                case "2" -> handleFileinput(scanner);
-                case "3" -> handleRandominput(scanner);
-                case "0" -> running = false;
-                default -> System.out.println("Неверный выбор. Попробуйте еще раз");
-
+            switch (choice) {
+                case 1:
+                    System.out.print("Введите путь к CSV (или Enter для 'cars.csv'): ");
+                    String path = scanner.nextLine();
+                    provider = new CarFileReader(Paths.get(path.isEmpty() ? "cars.csv" : path));
+                    break;
+                case 2:
+                    int countGen = getCount("Сколько сгенерировать?");
+                    if (countGen > 0) provider = new CarRandomGenerator(countGen);
+                    break;
+                case 3:
+                    int countInp = getCount("Сколько ввести вручную?");
+                    if (countInp > 0) provider = new CarInput(scanner, countInp);
+                    break;
+                default:
+                    System.out.println("Неверный выбор.");
             }
 
-
-        }
-
-        System.out.println("Работа завершена.");
-    }
-
-
-    private static void handleManualinput(Scanner scanner){
-
-        int lenght = askArrayLength(scanner);
-        Car[] cars = new CarManualinput().read(scanner, lenght);
-        runSortingFlow(cars);
-
-    }
-
-
-    private static void handleFileinput(Scanner scanner){
-        System.out.println("Вставьте путь к файлу: ");
-        String path = scanner.nextLine().trim();
-        Car[] cars = new CarFileReader().read(Path.of(path));
-        runSortingFlow(cars);
-
-    }
-
-
-    private static void handleRandominput(Scanner scanner){
-        int length = askArrayLength(scanner);
-        Car[] cars = new CarRandomGenerator().generate(length);
-        runSortingFlow(cars);
-
-    }
-
-    
-    private static int askArrayLength(Scanner scanner){
-        while(true){
-            System.out.println("Введите длину массива: ");
-            String input = scanner.nextLine().trim();
-            try {
-                int length = Integer.parseInt(input);
-                if (length > 0) {
-                    return length;
-                }
-                System.out.println("Длина дожна быть больше 0");
-
-                } catch (NumberFormatException ex) {
-                    System.out.println("Введите целое число:");
+            if (provider != null) {
+                Car[] cars = provider.read(); // Универсальный вызов
+                if (cars.length > 0) {
+                    printCars(cars);
+                } else {
+                    System.out.println("1Данные не получены.");
                 }
             }
         }
-
-
-    private static void runSortingFlow(Car[] cars) {
-        if(cars.length == 0){
-            System.out.println("Массив пуст");
-            return;
-        }
-
-        new QuickSort().sort(cars, null);
-        System.out.println("\nОтсортированный массив:");
-        for (Car car : cars){
-            System.out.println(car);
-        }
-
+        System.out.println("Программа завершена.");
     }
 
+    private static void printMenu() {
+        System.out.println("\n1. Из CSV | 2. Случайно | 3. Вручную | 4. Выход");
+        System.out.print("Ваш выбор: ");
+    }
+
+    private static int getMenuChoice() {
+        try { return Integer.parseInt(scanner.nextLine()); } 
+        catch (NumberFormatException e) { return 0; }
+    }
+
+    private static int getCount(String message) {
+        System.out.print(message + " ");
+        try { return Integer.parseInt(scanner.nextLine()); } 
+        catch (NumberFormatException e) { return -1; }
+    }
+
+    private static void printCars(Car[] cars) {
+        System.out.println("\n" + "=".repeat(50));
+        System.out.printf("%-10s %-20s %-10s%n", "Мощность", "Модель", "Год");
+        for (Car car : cars) {
+            System.out.printf("%-10d %-20s %-10d%n", car.getPower(), car.getModel(), car.getYear());
+        }
+        System.out.println("=".repeat(50));
+    }
 }
-
-
-
-
-
-
