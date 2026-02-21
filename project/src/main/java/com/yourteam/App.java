@@ -52,7 +52,7 @@ public class App {
 
     private static void handleRandominput(Scanner scanner) {
         int length = askArrayLength(scanner);
-        Car[] cars = new CarRandomGenerator(length).read();   // было .generate, теперь .read()
+        Car[] cars = new CarRandomGenerator(length).read();  
         runSortingFlow(cars);
     }
 
@@ -78,11 +78,11 @@ public class App {
             return;
         }
 
-        // Передаём реальный компаратор вместо null
+  
         new QuickSort().sort(cars, new CarComparator());
         System.out.println("\nОтсортированный массив:");
         for (Car car : cars) {
-            System.out.println(car);   // убедитесь, что в Car есть toString() — если нет, добавьте
+            System.out.println(car);   
         }
     }
 }
