@@ -18,7 +18,7 @@ public final class CarValidator {
     }
 
     public static boolean isValid(String model, int power, int year) {
-        // Простая проверка без исключений, диапазоны взяты из подсказки в ManualInput
+      
         return model != null && !model.isBlank() &&
                power > 0 && power < 3000 &&
                year >= 1886 && year <= 2026;
