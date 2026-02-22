@@ -48,7 +48,7 @@ public class CarFileReader implements CarProvider {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reader " + e.getMessage());
+            System.out.println("Ошибка чтения " + e.getMessage());
         }
         return carList.toArray(new Car[0]);
     }
