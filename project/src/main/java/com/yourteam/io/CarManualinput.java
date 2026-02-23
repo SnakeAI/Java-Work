@@ -1,22 +1,24 @@
 package com.yourteam.io;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.yourteam.model.Car;
 import com.yourteam.validation.CarValidator;
 
-public class CarManualinput implements CarProvider {
+public class CarManualInput implements CarProvider {
     private final Scanner scanner;
     private final int length;
 
-    public CarManualinput(Scanner scanner, int length) {
+    public CarManualInput(Scanner scanner, int length) {
         this.scanner = scanner;
         this.length = length;
     }
 
     @Override
-    public Car[] read() {
-        Car[] cars = new Car[length];
+    public List<Car> read() {
+        List<Car> cars = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             System.out.println("\nВведите Авто №" + (i + 1));
             
@@ -26,21 +28,21 @@ public class CarManualinput implements CarProvider {
 
             while (true) {
                 try {
-                    System.out.print("Введите мощность(л/с): ");     
+                    System.out.print("Введите мощность(1-2999 л/с): ");
                     power = Integer.parseInt(scanner.nextLine().trim());
                     
                     System.out.print("Введите модель: ");
                     model = scanner.nextLine().trim();
                     
-                    System.out.print("Введите год: ");
+                    System.out.print("Введите год(Год выпуска 1886-2026): ");
                     year = Integer.parseInt(scanner.nextLine().trim());
 
                     if (CarValidator.isValid(model, power, year)) {
-                        cars[i] = new Car.Builder()
+                        cars.add(new Car.Builder()
                                 .power(power)
                                 .model(model)
                                 .year(year)
-                                .build();
+                                .build());
                         System.out.println("Автомобили добавлены!");
                         break;
                     } else {

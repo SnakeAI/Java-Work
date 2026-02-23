@@ -3,9 +3,9 @@ package com.yourteam.model;
 import com.yourteam.validation.CarValidator;
 
 public class Car {
-    public int power;
-    public int year;
-    public String model;
+    private final int power;
+    private final int year;
+    private final String model;
 
     private Car(Builder builder) {
         this.power = builder.power;
@@ -18,9 +18,9 @@ public class Car {
     public String getModel() { return model; }
 
     public static class Builder {
-        public int power;
-        public int year;
-        public String model;
+        private int power;
+        private int year;
+        private String model;
 
         public Builder power(int power) {
             this.power = power;
@@ -34,8 +34,12 @@ public class Car {
             this.model = model;
             return this;
         }
+
+        public int getPower() { return power; }
+        public int getYear() { return year; }
+        public String getModel() { return model; }
+
         public Car build() {
-          
             CarValidator.validate(this);
             return new Car(this);
         }
@@ -44,8 +48,8 @@ public class Car {
 @Override
 public String toString() {
     return "Автомобиль{" +
-           "Модель='" + model + '\'' +
-           ", Мощность(л/с)=" + power +
+           "Модель = '" + model + '\'' +
+           ", Мощность(л/с) = " + power +
            ", Год выпуска " + year +
            '}';
 }

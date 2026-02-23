@@ -1,13 +1,15 @@
 package com.yourteam;
 
 import com.yourteam.io.CarFileReader;
-import com.yourteam.io.CarManualinput;
+import com.yourteam.io.CarManualInput;
+import com.yourteam.io.CarProvider;
 import com.yourteam.io.CarRandomGenerator;
 import com.yourteam.model.Car;
 import com.yourteam.strategy.QuickSort;
 import com.yourteam.util.CarComparator;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -25,9 +27,9 @@ public class App {
 
             String choice = scanner.nextLine().trim();
             switch (choice) {
-                case "1" -> handleManualinput(scanner);
-                case "2" -> handleFileinput(scanner);
-                case "3" -> handleRandominput(scanner);
+                case "1" -> handleManualInput(scanner);
+                case "2" -> handleFileInput(scanner);
+                case "3" -> handleRandomInput(scanner);
                 case "0" -> running = false;
                 default -> System.out.println("Неверный выбор. Попробуйте еще раз");
             }
@@ -36,23 +38,26 @@ public class App {
         System.out.println("Работа завершена.");
     }
 
-    private static void handleManualinput(Scanner scanner) {
+    private static void handleManualInput(Scanner scanner) {
         int length = askArrayLength(scanner);
-        Car[] cars = new CarManualinput(scanner, length).read();
+        CarProvider provider = new CarManualInput(scanner, length);
+        List<Car> cars = provider.read();
         runSortingFlow(cars);
     }
 
-    private static void handleFileinput(Scanner scanner) {
+    private static void handleFileInput(Scanner scanner) {
         System.out.print("Введите путь к файлу: ");
         String path = scanner.nextLine().trim();
-        Path filePath = Path.of(path);
-        Car[] cars = new CarFileReader(filePath).read();
+        Path filePath = Path.of("cars.csv");
+        CarProvider provider = new CarFileReader(filePath);
+        List<Car> cars = provider.read();
         runSortingFlow(cars);
     }
 
-    private static void handleRandominput(Scanner scanner) {
+    private static void handleRandomInput(Scanner scanner) {
         int length = askArrayLength(scanner);
-        Car[] cars = new CarRandomGenerator(length).read();   
+        CarProvider provider = new CarRandomGenerator(length);
+        List<Car> cars = provider.read();
         runSortingFlow(cars);
     }
 
@@ -72,16 +77,17 @@ public class App {
         }
     }
 
-    private static void runSortingFlow(Car[] cars) {
-        if (cars.length == 0) {
+    private static void runSortingFlow(List<Car> cars) {
+        if (cars.isEmpty()) {
             System.out.println("Массив пуст");
             return;
         }
 
+        Car[] array = cars.toArray(new Car[0]);
        
-        new QuickSort().sort(cars, new CarComparator());
+        new QuickSort().sort(array, new CarComparator());
         System.out.println("\nОтсортированный массив:");
-        for (Car car : cars) {
+        for (Car car : array) {
             System.out.println(car);   
     }
 }

@@ -18,7 +18,7 @@ public class CarFileReader implements CarProvider {
     }
 
     @Override
-    public Car[] read() {
+    public List<Car> read() {
         List<Car> carList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path.toFile()))) {
             String line;
@@ -50,7 +50,7 @@ public class CarFileReader implements CarProvider {
         } catch (IOException e) {
             System.out.println("Ошибка чтения " + e.getMessage());
         }
-        return carList.toArray(new Car[0]);
+        return carList;
     }
 
 }

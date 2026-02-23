@@ -8,13 +8,13 @@ public class CarComparator implements Comparator<Car> {
 
     @Override
     public int compare(Car a, Car b) {
-        if (a.power != b.power) {
-            return Integer.compare(a.power, b.power);
+        if (a.getPower() != b.getPower()) {
+            return Integer.compare(a.getPower(), b.getPower());
         }
-        int cmpModel = a.model.compareTo(b.model);
+        int cmpModel = a.getModel().compareTo(b.getModel());
         if (cmpModel != 0) {
             return cmpModel;
         }
-        return Integer.compare(b.year, a.year);
+        return Integer.compare(b.getYear(), a.getYear());
     }
 }

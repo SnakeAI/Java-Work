@@ -1,5 +1,7 @@
 package com.yourteam.io;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.yourteam.model.Car;
@@ -9,19 +11,24 @@ public class CarRandomGenerator implements CarProvider {
     private final int length;
     private final Random random = new Random();
 
+    private static final int MIN_POWER = 1;
+    private static final int MAX_POWER = 2999;
+    private static final int MIN_YEAR = 1886;
+    private static final int MAX_YEAR = 2026;
+
     public CarRandomGenerator(int length) {
         this.length = length;
     }
 
     @Override
-    public Car[] read() {
-        Car[] cars = new Car[length];
+    public List<Car> read() {
+        List<Car> cars = new ArrayList<>();
         for (int i = 0; i < length; i++) {
-            cars[i] = new Car.Builder()
+            cars.add(new Car.Builder()
                     .model(MODELS[random.nextInt(MODELS.length)])
-                    .power(50 + random.nextInt(500))
-                    .year(1990 + random.nextInt(37))
-                    .build();
+                    .power(random.nextInt(MAX_POWER - MIN_POWER + 1) + MIN_POWER)
+                    .year(random.nextInt(MAX_YEAR - MIN_YEAR + 1) + MIN_YEAR)
+                    .build());
         }
         return cars;
     }
