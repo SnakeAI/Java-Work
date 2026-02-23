@@ -1,7 +1,7 @@
 package com.yourteam;
 
 import com.yourteam.io.CarFileReader;
-import com.yourteam.io.CarManualInput;
+import com.yourteam.io.CarInput;
 import com.yourteam.io.CarProvider;
 import com.yourteam.io.CarRandomGenerator;
 import com.yourteam.model.Car;
@@ -40,7 +40,7 @@ public class App {
 
     private static void handleManualInput(Scanner scanner) {
         int length = askArrayLength(scanner);
-        CarProvider provider = new CarManualInput(scanner, length);
+        CarProvider provider = new CarInput(scanner, length);
         List<Car> cars = provider.read();
         runSortingFlow(cars);
     }

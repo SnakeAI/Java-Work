@@ -7,11 +7,11 @@ import java.util.Scanner;
 import com.yourteam.model.Car;
 import com.yourteam.validation.CarValidator;
 
-public class CarManualInput implements CarProvider {
+public class CarInput implements CarProvider {
     private final Scanner scanner;
     private final int length;
 
-    public CarManualInput(Scanner scanner, int length) {
+    public CarInput(Scanner scanner, int length) {
         this.scanner = scanner;
         this.length = length;
     }
