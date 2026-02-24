@@ -41,7 +41,7 @@ public class CarManualinput implements CarProvider {
                                 .model(model)
                                 .year(year)
                                 .build();
-                        System.out.println("Автомобили добавлены!");
+                        System.out.println("Автомобиль добавлен!");
                         break;
                     } else {
                         System.out.println("Ошибка ввода");
