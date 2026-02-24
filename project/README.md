@@ -17,12 +17,10 @@ java -cp target/car-sorter-1.0-SNAPSHOT.jar com.yourteam.project.App
 ```
 ```
 # Структура проекта
-src/main/java/com/yourteam/project/
+project/src/main/java/com/yourteam/
 ├─ App.java
 ├─ model/Car.java
 ├─ strategy/SortStrategy.java
-├─ strategy/InsertionSort.java
-├─ strategy/SelectionSort.java
 ├─ strategy/QuickSort.java
 ├─ io/CarFileReader.java
 ├─ io/CarRandomGenerator.java
@@ -38,8 +36,8 @@ src/main/java/com/yourteam/project/
 - README + согласование требований
 - Финальный merge
 
-### Кирилл Бабанин — сортировки (Strategy)
-- Реализовать минимум **2–3 алгоритма** (Insertion/Selection/Quick).
+### Кирилл Бабанин — сортировка (Strategy)
+- Реализовать минимум **Реализовать алгоритм сортировки QuickSort**.
 - Все алгоритмы используют **CarComparator**, чтобы сортировка шла по 3 полям.
 - Проверить корректность сортировки на тестовых данных.
 
